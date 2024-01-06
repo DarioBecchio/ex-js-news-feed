@@ -8,3 +8,9 @@
 background-color: #023047;
 }
 
+.bookmark{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
