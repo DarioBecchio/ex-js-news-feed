@@ -76,7 +76,7 @@ const createHTMLCard = cardData => {
 
 //---Node queries
 
-let domEl = document.querySelector('container');
+let domEl = document.querySelector('.row > .container');
 const select = document.getElementById('selected');
 
 //---Global variables
@@ -148,7 +148,27 @@ const filterDataBySelect = inputData => {
     }
     return filteredDataByCheckbox;
   };
+// ----------------------------
+// Funzione che mappa/elabora dataEls per migliorare il formato di alcuni dati (data e tags), filtra per tag, filtra secondo preferiti, pulisce l'html, stampa i dati pronti
+function updateCardsDisplay() {
+    const mappedData = mapData(dataEls);
+    const dataToPrint = filterDataBySelect(mappedData);
+    const finalData = filterDataByCheckbox(dataToPrint);
+    domEl.innerHTML = '';
+    printCards(finalData);
+  }
+  
+  
+  // --- EVENT LISTENERS
+  
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCardsDisplay();
+    select.addEventListener('change', updateCardsDisplay);
+    document.getElementById("showfavourite").addEventListener('change', updateCardsDisplay);
+  
 
+  });
 
 
 
