@@ -94,6 +94,66 @@ function printCards(cardsData){
       } else {
         domEl.insertAdjacentHTML('beforeend', '<h2>Nessuna card trovata</h2>');
       }
+
+//Funzione che aggiunge gli eventlistener ai bookmark
+
+const bookmarks = document.querySelectorAll('.bookmark');
+  bookmarks.forEach(bookmark => {
+    bookmark.addEventListener('click', function() {
+      const cardId = parseInt(this.closest('.card').getAttribute('id'));
+
+      if(favouriteCards.includes(cardId)) {
+        // delesezione della card preferita
+        favouriteCards = favouriteCards.filter(id => id !== cardId);
+      } else {
+        // selezione della card come preferita
+        favouriteCards.push(cardId);
+      }
+      bookmark.classList.toggle('bg-dark');
+      console.log('favouriteCards', favouriteCards);
+    });
+  });
+
+    }
+
+//-----Mapping dataEls
+const mapData = (inputData) => {
+    const outputData = inputData.map(el => {
+      const newEl = JSON.parse(JSON.stringify(el)); // duplica "el" creando un nuovo riferimento, manipolando "data" non si andrà a modificare el originale
+      newEl.published = reformatDate(el.published);
+      newEl.tags = el.tags.split(', ');
+      return newEl;
+    });
+  
+    return outputData;
 }
+
+//--- FILTRI
+
+// Prendono in input dataEls, filtrano attraverso la select e la checkbox, restituiscono l'array di dati (un nuovo dataEls filtrato)
+const filterDataBySelect = inputData => {
+    const selectedValue = select.value;
+    let filteredDataBySelect = JSON.parse(JSON.stringify(inputData)); // duplica inputData (cioè dataEls) creando un nuovo riferimento, manipolando "filteredDataBySelect" non si andrà a modificare il dataEls originale
+    if (selectedValue !== 'all') {
+      filteredDataBySelect = inputData.filter(el => el.tags.includes(selectedValue));
+    }
+    return filteredDataBySelect;
+  };
+  const filterDataByCheckbox = inputData => {
+    const isFavouriteChecked = document.getElementById('flexCheckDefault').checked;
+    let filteredDataByCheckbox = JSON.parse(JSON.stringify(inputData)); // duplica inputData (cioè dataEls) creando un nuovo riferimento, manipolando "filteredDataByCheckbox" non si andrà a modificare il dataEls originale
+  
+    if(isFavouriteChecked) {
+      filteredDataByCheckbox = inputData.filter(el => favouriteCards.includes(el.id));
+    }
+    return filteredDataByCheckbox;
+  };
+
+
+
+
+
+
+
 
 
