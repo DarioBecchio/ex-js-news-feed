@@ -33,7 +33,7 @@ const dataEls = [{
   ];
 
 
-
+//----------Utilities
 
 // Funzione che cambia il formato della data da anglosassone a europeo
 
@@ -45,22 +45,55 @@ function reformatDate(inputDateString) {
 // Funzione che crea le card HTML a partire dall'array di oggetti (dataEls) 
 
 const createHTMLCard = cardData => {
+
     let HTMLCard = `
-        <div id="${cardData.id}" class="card">
-          <h2>${cardData.title}</h2>
-          <h4>pubblicato da ${cardData.author}</h4>
-          <span> In data ${cardData.published}</span>
-          <p>${cardData.content}</p>
-      `;
-      cardData.tags.forEach((el => {
-        HTMLCard += `<span class="badge bg-secondary">${el}</span>`;
-      }));
-    
-      if(favouriteCards.includes(cardData.id)) {
-        HTMLCard += `<i class="fa-regular fa-bookmark bookmark bg-dark"></i></div>`;
+    <div id = "${cardData.id}" class="card position-relative">
+            <h2>${cardData.title}</h2>
+            <h4>pubblicato da ${cardData.author}</h4>
+            <span> in data ${cardData.published}</span>
+            <p>${cardData.content}</p>
+            `;
+            cardData.tags.forEach((el => {
+                HTMLCard += 
+                `<div class="d-flex">
+                    <span class="badge bg-secondary">${el}</span>   
+                </div>`
+            }));
+            if (favouriteCards.includes(cardData.id)) {
+            HTMLCard +=  `  <div class="bookmark">
+                                <i class="fa-regular fa-bookmark bookmark bg-dark"></i>
+                            </div>
+                            </div>`
+            } else {
+            HTMLCard +=  `  <div class="bookmark">
+                                <i class="fa-regular fa-bookmark bookmark"></i>
+                            </div>
+                            </div>`
+            }
+ return HTMLCard;          
+};
+
+
+//---Node queries
+
+let domEl = document.querySelector('container');
+const select = document.getElementById('selected');
+
+//---Global variables
+
+let favouriteCards = [];
+
+// Funzione che stampa le card sulla pagina
+
+function printCards(cardsData){
+    if(cardsData.length > 0) {
+        cardsData.forEach(cardData => {
+          const HTMLCard = createHTMLCard(cardData);
+          domEl.insertAdjacentHTML('beforeend', HTMLCard);
+        });
       } else {
-        HTMLCard += `<i class="fa-regular fa-bookmark bookmark"></i></div>`;
+        domEl.insertAdjacentHTML('beforeend', '<h2>Nessuna card trovata</h2>');
       }
-    
-      return HTMLCard;
-    };
+}
+
+
