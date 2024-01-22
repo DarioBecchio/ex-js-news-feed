@@ -5,6 +5,7 @@ const dataEls = [{
     tags: 'geo, tech',
     author: 'Diana Rossi',
     published: '2023-02-11',
+    image:'rubber-duck.jpg'
   },
   {
     id: 2,
@@ -13,6 +14,7 @@ const dataEls = [{
     tags: 'viaggi, geo',
     author: 'Fabio Mari',
     published: '2023-03-14',
+    image:'deep-sea.jpg'
   },
   {
     id: 3,
@@ -21,6 +23,7 @@ const dataEls = [{
     tags: 'cucina',
     author: 'Marta Bianchi',
     published: '2023-04-20',
+    image: 'modern-art.jpg'
   },
   {
     id: 4,
@@ -29,6 +32,7 @@ const dataEls = [{
     tags: 'arte, tech',
     author: 'Gabriele Neri',
     published: '2023-05-29',
+    image: 'modern-art.jpg'
   }
   ];
 
@@ -47,17 +51,16 @@ function reformatDate(inputDateString) {
 const createHTMLCard = cardData => {
 
     let HTMLCard = `
-    <div id = "${cardData.id}" class="card position-relative">
+    <div id = "${cardData.id}" class="card position-relative mb-1">
             <h2>${cardData.title}</h2>
             <h4>pubblicato da ${cardData.author}</h4>
             <span> in data ${cardData.published}</span>
             <p>${cardData.content}</p>
+            <img src="${cardData.image}" alt="">
             `;
             cardData.tags.forEach((el => {
-                HTMLCard += 
-                `<div class="d-flex">
-                    <span class="badge bg-secondary">${el}</span>   
-                </div>`
+                HTMLCard += `<span class="badge bg-secondary">${el}</span> `
+                
             }));
             if (favouriteCards.includes(cardData.id)) {
             HTMLCard +=  `  <div class="bookmark">
@@ -76,7 +79,7 @@ const createHTMLCard = cardData => {
 
 //---Node queries
 
-let domEl = document.querySelector('.row > .container');
+let domEl = document.querySelector('.row');
 const select = document.getElementById('selected');
 
 //---Global variables
