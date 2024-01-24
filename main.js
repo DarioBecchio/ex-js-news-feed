@@ -23,7 +23,7 @@ const dataEls = [{
     tags: 'cucina',
     author: 'Marta Bianchi',
     published: '2023-04-20',
-    image: 'modern-art.jpg'
+    image: 'kitchen-food.jpg'
   },
   {
     id: 4,
@@ -51,27 +51,22 @@ function reformatDate(inputDateString) {
 const createHTMLCard = cardData => {
 
     let HTMLCard = `
-    <div id = "${cardData.id}" class="card position-relative mb-1">
+    <div id = "${cardData.id}" class="card position-relative mb-2">
             <h2>${cardData.title}</h2>
             <h4>pubblicato da ${cardData.author}</h4>
             <span> in data ${cardData.published}</span>
             <p>${cardData.content}</p>
             <img src="${cardData.image}" alt="">
-            `;
+           `;
             cardData.tags.forEach((el => {
-                HTMLCard += `<span class="badge bg-secondary">${el}</span> `
-                
+                HTMLCard += `<div class="d-inline"> 
+                <span class="badges ${el}">${el}</span>                
+                `                
             }));
             if (favouriteCards.includes(cardData.id)) {
-            HTMLCard +=  `  <div class="bookmark">
-                                <i class="fa-regular fa-bookmark bookmark bg-dark"></i>
-                            </div>
-                            </div>`
+            HTMLCard +=  `<i class="fa-regular fa-bookmark bookmark dark"></i></div>`
             } else {
-            HTMLCard +=  `  <div class="bookmark">
-                                <i class="fa-regular fa-bookmark bookmark"></i>
-                            </div>
-                            </div>`
+            HTMLCard +=  `<i class="fa-regular fa-bookmark bookmark"></i></div>`
             }
  return HTMLCard;          
 };
@@ -95,7 +90,7 @@ function printCards(cardsData){
           domEl.insertAdjacentHTML('beforeend', HTMLCard);
         });
       } else {
-        domEl.insertAdjacentHTML('beforeend', '<h2>Nessuna card trovata</h2>');
+        domEl.insertAdjacentHTML('beforeend', '<h2 class="alert" >Nessuna card trovata</h2>');
       }
 
 //Funzione che aggiunge gli eventlistener ai bookmark
@@ -136,7 +131,7 @@ const mapData = (inputData) => {
 // Prendono in input dataEls, filtrano attraverso la select e la checkbox, restituiscono l'array di dati (un nuovo dataEls filtrato)
 const filterDataBySelect = inputData => {
     const selectedValue = select.value;
-    let filteredDataBySelect = JSON.parse(JSON.stringify(inputData)); // duplica inputData (cioè dataEls) creando un nuovo riferimento, manipolando "filteredDataBySelect" non si andrà a modificare il dataEls originale
+    let filteredDataBySelect = JSON.parse(JSON.stringify(inputData)); 
     if (selectedValue !== 'all') {
       filteredDataBySelect = inputData.filter(el => el.tags.includes(selectedValue));
     }
@@ -144,7 +139,7 @@ const filterDataBySelect = inputData => {
   };
   const filterDataByCheckbox = inputData => {
     const isFavouriteChecked = document.getElementById('flexCheckDefault').checked;
-    let filteredDataByCheckbox = JSON.parse(JSON.stringify(inputData)); // duplica inputData (cioè dataEls) creando un nuovo riferimento, manipolando "filteredDataByCheckbox" non si andrà a modificare il dataEls originale
+    let filteredDataByCheckbox = JSON.parse(JSON.stringify(inputData)); 
   
     if(isFavouriteChecked) {
       filteredDataByCheckbox = inputData.filter(el => favouriteCards.includes(el.id));
@@ -168,7 +163,7 @@ function updateCardsDisplay() {
   document.addEventListener('DOMContentLoaded', () => {
     updateCardsDisplay();
     select.addEventListener('change', updateCardsDisplay);
-    document.getElementById("showfavourite").addEventListener('change', updateCardsDisplay);
+    document.getElementById("flexCheckDefault").addEventListener('change', updateCardsDisplay);
   
 
   });
