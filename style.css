@@ -14,3 +14,48 @@ background-color: #023047;
     right: 1rem;
 }
 
+.containers{
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1142px;
+}
+
+.badges{
+    
+        display: inline-block;
+        padding: 1em 1.5em;
+        font-size: 1em;
+        font-weight: 500;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.5rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+        margin-right: 0.25rem;
+}
+.alert{
+    color: white;
+}
+.geo{
+    background-color: green;
+}
+.tech{
+background-color: blue;
+}
+.arte{
+    background-color: #ffc107;
+}
+.viaggi{
+    background-color: #e77e17c4;
+}
+.cucina{
+    background-color: purple;
+}
+
+.dark{
+    background-color: black;
+}
